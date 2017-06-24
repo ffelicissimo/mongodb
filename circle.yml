@@ -12,7 +12,7 @@ dependencies:
   override:
     - docker info
 #   - docker build --rm=false -t fifelicissimo/pendenciazero:$(`git describe --abbrev=0 --tags`)
-    - docker build --rm=false -t qideia/merchandb .
+    - docker build --rm=false -t mongodb/mongodb .
 test:
   override:
     - echo "test"
@@ -25,7 +25,7 @@ deployment:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-      - docker push qideia/merchandb
+      - docker push mongodb/mongodb
 #     - docker push fifelicissimo/pendenciazero:$
 #deployment:
 #prod:
