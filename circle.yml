@@ -1,0 +1,41 @@
+####Mostrando Cristian 
+machine:
+  timezone:
+    America/Sao_Paulo
+  services:
+    - docker
+dependencies:
+  pre:
+    - docker version
+    - docker info
+    - aws --version
+  override:
+    - docker info
+#   - docker build --rm=false -t fifelicissimo/pendenciazero:$(`git describe --abbrev=0 --tags`)
+    - docker build --rm=false -t qideia/merchandb .
+test:
+  override:
+    - echo "test"
+#  - docker run -d -p 8080:8080 --name=pendenciazero fifelicissimo/pendenciazero ; sleep 12 
+#  - curl -I --silent http://localhost:8080/pendenciazero | grep "HTTP/1.1 404 Not Found"
+#  - curl --retry 10 --retry-delay 5 -v http://localhost:8080/pendenciazero
+ 
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+      - docker push qideia/merchandb
+#     - docker push fifelicissimo/pendenciazero:$
+#deployment:
+#prod:
+#dockerhub:
+#branch: master
+#   commands:
+#     - $TRIGGER_DOCKER_HUB_BUILD
+#     - docker login -e $DOCKER_EMAIL -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+#     - docker build -t $(git describe --tags --abbrev=0) .
+#     - docker push fifelicissimo/ti-20-api-usuario:$
+#     - docker build -t ti-20-api-usuario .
+#     - docker build -t ti-20-api-usuario:$ .
+#     - docker push fifelicissimo/ti-20-api-usuario
